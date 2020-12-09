@@ -3,6 +3,7 @@ const path = require('path');
 // const RefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 module.exports = function(env, argv) {
@@ -11,14 +12,23 @@ module.exports = function(env, argv) {
 	return {
 		mode: devMode ? 'development' : 'production',
 		resolve: {
-			extensions: ['.js', '.jsx']
+			extensions: ['.js', '.jsx'],
+			alias: {
+				src: path.resolve(__dirname, 'src'),
+				public: path.resolve(__dirname, 'public'),
+				images: path.resolve(__dirname, 'public/images'),
+				components: path.resolve(__dirname, 'src/components'),
+				actionTypes: path.resolve(__dirname, 'src/store/actionTypes'),
+				actions: path.resolve(__dirname, 'src/store/actions'),
+				reducers: path.resolve(__dirname, 'src/store/reducers'),
+			}
 		},
 		entry: {
 			app: './index.jsx'
 		},
 		output: {
 			filename: '[name].js',
-			path: path.resolve(__dirname, 'build')
+			path: path.resolve(__dirname, 'build'),
 		},
 		devServer: {
 			port: 3030,
@@ -48,6 +58,15 @@ module.exports = function(env, argv) {
 						},
 						'sass-loader'
 					]
+				},
+				{
+					test: /\.(jpe?g|png|gif|svg)$/,
+					use: [{
+						loader: 'file-loader',
+						options: {
+							esModule: false
+						}
+					}]
 				}
 			]
 		},
@@ -61,6 +80,11 @@ module.exports = function(env, argv) {
 			new MiniCssExtractPlugin({ 
 				filename: '[name].css',
 				chunkFilename: '[id].css'
+			}),
+			new CopyWebpackPlugin({
+				patterns: [
+					{from: 'public', to: 'public'}
+				]
 			})
 		]
 	}
