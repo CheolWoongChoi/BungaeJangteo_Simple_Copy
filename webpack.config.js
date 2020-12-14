@@ -1,6 +1,5 @@
 
 const path = require('path');
-// const RefreshWebpackPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -44,7 +43,7 @@ module.exports = function(env, argv) {
 						loader: 'babel-loader',
 						options: {
 							presets: ['@babel/preset-env', '@babel/preset-react'],
-							plugins: ['@babel/plugin-proposal-class-properties', '@babel/plugin-transform-runtime', /* 'react-refresh/babel' */],
+							plugins: ['@babel/plugin-proposal-class-properties', '@babel/plugin-transform-runtime'],
 						}
 					}]
 				},
@@ -71,7 +70,6 @@ module.exports = function(env, argv) {
 			]
 		},
 		plugins: [
-			// new RefreshWebpackPlugin(),
 			new CleanWebpackPlugin(),
 			new HtmlWebpackPlugin({
 				filename: 'index.html',
