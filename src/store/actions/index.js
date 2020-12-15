@@ -1,16 +1,15 @@
 
-import { SOMETHING1, SOMETHING2 } from 'actionTypes';
+import { SOMETHING1 } from 'actionTypes';
+import axios from 'axios';
 
-// Redux Thunk 액션
-export const someThing1 = () => async dispatch => {
+export const something1 = () => async dispatch => {
 	dispatch({
 		type: SOMETHING1,
 		payload: ''
 	});
 };
 
-// 일반 Action
-export const someThing2= () => ({
+export const something2 = () => ({
 	type: SOMETHING2,
-	payload: ''
+	payload: '',
 });
