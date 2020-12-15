@@ -16,6 +16,7 @@ module.exports = function(env, argv) {
 				src: path.resolve(__dirname, 'src'),
 				public: path.resolve(__dirname, 'public'),
 				images: path.resolve(__dirname, 'public/images'),
+				constants: path.resolve(__dirname, 'src/constants'),
 				components: path.resolve(__dirname, 'src/components'),
 				actionTypes: path.resolve(__dirname, 'src/store/actionTypes'),
 				actions: path.resolve(__dirname, 'src/store/actions'),
