@@ -1,30 +1,32 @@
 
-import React, { useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import { getProducts } from 'actions';
 import './OrderTab.scss';
 
-const OrderTab = () => {
-	const [type, setType] = useState('');
-	const { keyword } = useSelector(state => state.app);
+const OrderTab = ({ keyword, setOrder }) => {
 	const dispatch = useDispatch();
 
-	const handleSetOrder = (type) => {
-		setType(type);
+	const handleSetOrder = (e) => {
+		if (keyword) {
+			dispatch(
+				getProducts({ keyword, order: e.target.className })
+			);
 
-		dispatch(
-			getProducts({
-				keyword: keyword,
-				order: type,
-			})
-		);
+			setOrder(e.target.className);
+		}
+
+		document.querySelector('.order-tab .selected')?.classList.remove('selected'); 
+		e.target.classList.add('selected');
 	};
 
 	return (
-		<div className='order-wrap'>
-			<span className={type === 'date' ? 'selected' : ''} onClick={() => handleSetOrder('date')}>최신순</span>
-			<span className={type === 'price_asc' ? 'selected' : ''} onClick={() => handleSetOrder('price_asc')}>저가순</span>
-			<span className={type === 'price_desc' ? 'selected' : ''} onClick={() => handleSetOrder('price_desc')}>고가순</span>
+		<div className='order-tab-wrap'>
+			<div className='order-tab'  onClick={handleSetOrder}>
+				<span className='date selected'>최신순</span>
+				<span className='price_asc'>저가순</span>
+				<span className='price_desc'>고가순</span>
+			</div>
 		</div>
 	)
 

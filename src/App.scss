@@ -1,13 +1,11 @@
 
 .container {
-	margin: 0 auto;
-	width: 500px;
-
-	.search-bar {
-
-	}
+	margin: 50px auto;
+	width: 1000px;
 
 	.products-wrap {
-		
+		margin-top: 40px;
+		display: flex;
+		flex-wrap: wrap;
 	}
 }

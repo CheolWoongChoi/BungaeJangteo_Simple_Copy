@@ -11,11 +11,9 @@ export const getProducts = ({ keyword, order }) => async dispatch => {
 		}
 	});
 
-	console.log(response);
-
 	dispatch({
 		type: GET_PRODUCTS,
-		payload: { keyword: keyword, list: response.data.list }
+		payload: { keyword, list: response.data.list }
 	});
 };
 

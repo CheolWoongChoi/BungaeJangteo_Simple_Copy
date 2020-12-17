@@ -6,14 +6,17 @@ import Product from 'components/Product';
 import './App.scss';
 
 const App = () => {
-  const { productList } = useSelector(state => state.app);
+  const [keyword, setKeyword] = useState('');
+  const [order, setOrder] = useState('date');
+  const { products } = useSelector(state => state.app);
 
   return (
     <div className='container'>
-      <SearchBar />
-      <OrderTab />
+      <SearchBar keyword={keyword} order={order} setKeyword={setKeyword} />
+      <OrderTab keyword={keyword} order={order} setOrder={setOrder} />
+
       <div className='products-wrap'>
-        {productList.map(product => (
+        {products.map(product => (
           <Product product={product} />
         ))}
       </div>

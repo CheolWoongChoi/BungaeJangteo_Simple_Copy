@@ -2,8 +2,7 @@
 import { GET_PRODUCTS } from 'actionTypes';
 
 const initialState = {
-	productList: [],
-	keyword: ''
+	products: [],
 };
 
 export default function (state = initialState, action) {
@@ -11,8 +10,7 @@ export default function (state = initialState, action) {
 		case GET_PRODUCTS:
 			return {
 				...state,
-				keyword: action.payload.keyword,
-				productList: action.payload.list
+				products: action.payload.list
 			}
 		default:
 			return state;

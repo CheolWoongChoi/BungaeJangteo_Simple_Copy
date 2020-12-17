@@ -1,9 +1,23 @@
 
-.order-wrap {
+.order-tab-wrap {
+	margin-top: 20px;
 	text-align: right;
 
-	.selected {
-		font-weight: bold;
-		text-decoration: underline;
+	.order-tab {
+		display: inline-block;
+
+		span {
+			margin-left: 5px;
+			cursor: pointer;
+			
+			&:first-child {
+				margin-left: 0;
+			}
+
+			&.selected {
+				font-weight: bold;
+				text-decoration: underline;
+			}
+		}
 	}
 }

@@ -1,37 +1,34 @@
 
-import React, { useState } from 'react';
+import React from 'react';
 import { useDispatch } from 'react-redux';
 import { getProducts } from 'actions';
 import './SearchBar.scss';
 
-const SearchBar = () => {
-	const [ keyword, setText ] = useState('');
+const SearchBar = ({ keyword, order, setKeyword }) => {
 	const dispatch = useDispatch();
 
-	const onChangeText = e => {
-		setText(e.target.value);
+	const onChangeKeyword = e => {
+		setKeyword(e.target.value);
 	}
 
 	const onEnterKeyword = e => {
-		// e.preventDefault();
-	
-		console.log(e.target);
+		e.preventDefault();
 
-		// dispatch(getProducts({
-		// 	keyword: keyword,
-		// 	order: 'date'
-		// }));
+		if (!keyword) {
+			alert('검색어를 입력하세요!');
+			return;
+		}
+
+		dispatch(
+			getProducts({ keyword, order })
+		);
 	}
 
 	return(
-		<>
-			<img src='https://tistory1.daumcdn.net/tistory/79335/skin/images/arrow_top.png' align='right' />
-
-			<form target='_blank' onSubmit={onEnterKeyword}>
-				<input type='color' name='test' />
-				<input type='submit' value='검색' />
-			</form>
-		</>
+		<form className='search-bar-wrap' onSubmit={onEnterKeyword}>
+			<input type='text' name='keyword' value={keyword} onChange={onChangeKeyword}/>
+			<input type='submit' value='검색' />
+		</form>
 	);
 }
 
