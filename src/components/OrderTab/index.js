@@ -4,17 +4,18 @@ import { useDispatch } from 'react-redux';
 import { getProducts } from 'actions';
 import './OrderTab.scss';
 
-const OrderTab = ({ keyword, setOrder }) => {
+const OrderTab = () => {
 	const dispatch = useDispatch();
 
 	const handleSetOrder = (e) => {
-		if (keyword) {
-			dispatch(
-				getProducts({ keyword, order: e.target.className })
-			);
+		const params = new URLSearchParams(location.search);
 
-			setOrder(e.target.className);
-		}
+		dispatch(
+			getProducts({ 
+				keyword: params.get('q') || '', 
+				order: e.target.className 
+			})
+		);
 
 		document.querySelector('.order-tab .selected')?.classList.remove('selected'); 
 		e.target.classList.add('selected');

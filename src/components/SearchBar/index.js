@@ -4,29 +4,31 @@ import { useDispatch } from 'react-redux';
 import { getProducts } from 'actions';
 import './SearchBar.scss';
 
-const SearchBar = ({ keyword, order, setKeyword }) => {
+const SearchBar = ({ keyword, setKeyword }) => {
 	const dispatch = useDispatch();
 
 	const onChangeKeyword = e => {
 		setKeyword(e.target.value);
 	}
 
-	const onEnterKeyword = e => {
-		e.preventDefault();
+	const onSubmitKeyword = e => {
+		const params = new URLSearchParams(location.search);
+		const order = params.get('order') || 'date';
 
-		if (!keyword) {
-			alert('검색어를 입력하세요!');
-			return;
-		}
+		e.preventDefault();
+		history.pushState(null, null, `?q=${keyword}&order=${order}`);
 
 		dispatch(
-			getProducts({ keyword, order })
+			getProducts({ 
+				keyword, 
+				order
+			})
 		);
 	}
 
 	return(
-		<form className='search-bar-wrap' onSubmit={onEnterKeyword}>
-			<input type='text' name='keyword' value={keyword} onChange={onChangeKeyword}/>
+		<form className='search-bar-wrap' onSubmit={onSubmitKeyword}>
+			<input type='text' name='keyword' autoComplete='off' value={keyword} onChange={onChangeKeyword}/>
 			<input type='submit' value='검색' />
 		</form>
 	);
