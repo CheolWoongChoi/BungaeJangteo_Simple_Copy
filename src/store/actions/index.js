@@ -1,11 +1,21 @@
 
-import { SOMETHING1 } from 'actionTypes';
+import { GET_PRODUCTS } from 'actionTypes';
 import axios from 'axios';
 
-export const something1 = () => async dispatch => {
+export const getProducts = ({ keyword, order }) => async dispatch => {
+	const response = await axios.get('https://api.stg-bunjang.co.kr/api/1/find_v2.json', {
+		params: {
+			q: keyword,
+			order,
+			version: 4
+		}
+	});
+
+	console.log(response);
+
 	dispatch({
-		type: SOMETHING1,
-		payload: ''
+		type: GET_PRODUCTS,
+		payload: { keyword: keyword, list: response.data.list }
 	});
 };
 
