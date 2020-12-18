@@ -11,12 +11,13 @@ export const getProducts = ({ keyword, order }) => async dispatch => {
 		}
 	});
 
-	history.pushState(null, null, `/?q=${keyword}&order=${order}`);
-
 	dispatch({
 		type: GET_PRODUCTS,
 		payload: { keyword, list: response.data.list }
 	});
+
+	document.querySelector('.order-tab .selected')?.classList.remove('selected'); 
+	document.querySelector(`.order-tab .${order}`).classList.add('selected');
 };
 
 export const something2 = () => ({

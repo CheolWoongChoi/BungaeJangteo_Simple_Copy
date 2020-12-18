@@ -12,11 +12,10 @@ const SearchBar = ({ keyword, setKeyword }) => {
 	}
 
 	const onSubmitKeyword = e => {
+		e.preventDefault();
+
 		const params = new URLSearchParams(location.search);
 		const order = params.get('order') || 'date';
-
-		e.preventDefault();
-		history.pushState(null, null, `?q=${keyword}&order=${order}`);
 
 		dispatch(
 			getProducts({ 
@@ -24,6 +23,8 @@ const SearchBar = ({ keyword, setKeyword }) => {
 				order
 			})
 		);
+
+		history.pushState(null, null, `?q=${keyword}&order=${order}`);
 	}
 
 	return(

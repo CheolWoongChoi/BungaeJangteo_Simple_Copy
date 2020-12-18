@@ -9,16 +9,17 @@ const OrderTab = () => {
 
 	const handleSetOrder = (e) => {
 		const params = new URLSearchParams(location.search);
+		const keyword = params.get('q') || '';
+		const order = e.target.className;
 
 		dispatch(
 			getProducts({ 
-				keyword: params.get('q') || '', 
-				order: e.target.className 
+				keyword,
+				order
 			})
 		);
 
-		document.querySelector('.order-tab .selected')?.classList.remove('selected'); 
-		e.target.classList.add('selected');
+		history.pushState(null, null, `?q=${keyword}&order=${order}`);
 	};
 
 	return (

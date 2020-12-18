@@ -9,26 +9,25 @@ import './App.scss';
 const App = () => {
   const dispatch = useDispatch();
   const [keyword, setKeyword] = useState('');
-  // const [order, setOrder] = useState('date');
   const { products } = useSelector(state => state.app);
-  const params = new URLSearchParams(location.search);
-
-  useEffect(() => {
+  
+  const getProductsFromUrl = () => {
+    const params = new URLSearchParams(location.search);
+    
     dispatch(
       getProducts({ 
         keyword: params.get('q') || '', 
         order: params.get('order') || 'date'
       })
     );
+  }
+
+  useEffect(() => {
+    getProductsFromUrl();
   }, []),
 
   window.onpopstate = () => {
-    dispatch(
-      getProducts({ 
-        keyword: params.get('q') || '', 
-        order: params.get('order') || 'date'
-      })
-    );
+    getProductsFromUrl();
   }
 
   return (

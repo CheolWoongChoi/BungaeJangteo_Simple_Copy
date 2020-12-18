@@ -1,8 +1,14 @@
 
 .product-wrap {
+	// display: inline-block;
 	margin-top: 20px;
-	margin-left: 1%;
-	width: 24%;
+	margin-left: 2%;
+	width: 23.5%;
+	vertical-align: top;
+
+	&:nth-child(4n+1) {
+		margin-left: 0;
+	}
 
 	img {
 		width: 100%;
