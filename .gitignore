@@ -6,3 +6,4 @@
 # 기타
 .vscode
 package-lock.json
+debug.log

@@ -8,6 +8,8 @@ const OrderTab = () => {
 	const dispatch = useDispatch();
 
 	const handleSetOrder = (e) => {
+		if (e.target.tagName !== 'SPAN') return;
+
 		const params = new URLSearchParams(location.search);
 		const keyword = params.get('q') || '';
 		const order = e.target.className;

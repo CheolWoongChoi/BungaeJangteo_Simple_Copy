@@ -1,5 +1,5 @@
 
-import { GET_PRODUCTS } from 'actionTypes';
+import { GET_PRODUCTS, GET_SUGGESTS } from 'actionTypes';
 import axios from 'axios';
 
 export const getProducts = ({ keyword, order }) => async dispatch => {
@@ -20,7 +20,23 @@ export const getProducts = ({ keyword, order }) => async dispatch => {
 	document.querySelector(`.order-tab .${order}`).classList.add('selected');
 };
 
-export const something2 = () => ({
-	type: SOMETHING2,
-	payload: '',
-});
+
+export const getSuggests = ({ keyword }) => async dispatch => {
+	const response = await axios.get('https://api.stg-bunjang.co.kr/api/1/search/suggests_keyword.json', {
+		params: {
+			q: keyword,
+			type: 'product',
+			v: 2
+		}
+	});
+	let suggests = response.data.keywords;
+
+	if (suggests.length > 10) {
+		suggests = suggests.slice(0, 10);
+	}
+
+	dispatch({
+		type: GET_SUGGESTS,
+		payload: suggests
+	});
+}

@@ -1,8 +1,9 @@
 
-import { GET_PRODUCTS } from 'actionTypes';
+import { GET_PRODUCTS, GET_SUGGESTS } from 'actionTypes';
 
 const initialState = {
 	products: [],
+	suggests: []
 };
 
 export default function (state = initialState, action) {
@@ -11,6 +12,11 @@ export default function (state = initialState, action) {
 			return {
 				...state,
 				products: action.payload.list
+			}
+		case GET_SUGGESTS:
+			return {
+				...state,
+				suggests: action.payload
 			}
 		default:
 			return state;

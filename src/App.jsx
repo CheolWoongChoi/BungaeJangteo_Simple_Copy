@@ -9,7 +9,7 @@ import './App.scss';
 const App = () => {
   const dispatch = useDispatch();
   const [keyword, setKeyword] = useState('');
-  const { products } = useSelector(state => state.app);
+  const { products, suggests } = useSelector(state => state.app);
   
   const getProductsFromUrl = () => {
     const params = new URLSearchParams(location.search);
@@ -32,7 +32,7 @@ const App = () => {
 
   return (
     <div className='container'>
-      <SearchBar keyword={keyword} setKeyword={setKeyword} />
+      <SearchBar keyword={keyword} suggests={suggests} setKeyword={setKeyword} />
       <OrderTab />
 
       <div className='products-wrap'>

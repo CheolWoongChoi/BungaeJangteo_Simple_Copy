@@ -1,38 +1,69 @@
-
+import _ from 'lodash';
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { getProducts } from 'actions';
+import { getProducts, getSuggests } from 'actions';
 import './SearchBar.scss';
 
-const SearchBar = ({ keyword, setKeyword }) => {
-	const dispatch = useDispatch();
+const SearchBar = ({ keyword, suggests, setKeyword }) => {
+  const dispatch = useDispatch();
 
-	const onChangeKeyword = e => {
-		setKeyword(e.target.value);
-	}
-
-	const onSubmitKeyword = e => {
-		e.preventDefault();
-
-		const params = new URLSearchParams(location.search);
-		const order = params.get('order') || 'date';
+	const debounceGetSuggests = _.debounce((keyword) => {
+		console.log('debounceGetSuggests');
+		console.log(keyword);
 
 		dispatch(
-			getProducts({ 
-				keyword, 
-				order
-			})
+			getSuggests({ keyword })
 		);
+	}, 500);
 
-		history.pushState(null, null, `?q=${keyword}&order=${order}`);
-	}
+  // const onChangeKeyword = e => {
+  //   setKeyword(e.target.value);
+  //   debounceGetSuggests(e.target.value);
+  // };
 
-	return(
-		<form className='search-bar-wrap' onSubmit={onSubmitKeyword}>
-			<input type='text' name='keyword' autoComplete='off' value={keyword} onChange={onChangeKeyword}/>
-			<input type='submit' value='검색' />
-		</form>
-	);
-}
+	const onChangeKeyword = _.debounce((e) => {
+		console.log(e.target.value);
+		setKeyword(e.target.value)
+	}, 500);
+
+  const onSubmitKeyword = (e) => {
+    e.preventDefault();
+
+    const params = new URLSearchParams(location.search);
+    const order = params.get('order') || 'date';
+
+    dispatch(
+      getProducts({
+        keyword,
+        order,
+      })
+    );
+
+    history.pushState(null, null, `?q=${keyword}&order=${order}`);
+  };
+
+  return (
+		<div className='search-bar-wrap'>
+			<div className='form-wrap'>
+				<form onSubmit={onSubmitKeyword}>
+					<input
+						type='text'
+						name='keyword'
+						autoComplete='off'
+						value={keyword}
+						onChange={onChangeKeyword}
+					/>
+					<input type='submit' value='검색' />
+				</form>
+				<div className='suggests-wrap'>
+					{console.dir(suggests)}
+					{suggests.map((v, i) => (
+						<li key={i}>{v.name}</li>
+					))}
+				</div>
+			</div>
+		</div>
+  );
+};
 
 export default SearchBar;
