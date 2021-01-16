@@ -1,4 +1,3 @@
-import _ from 'lodash';
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { getProducts, getSuggests } from 'actions';
@@ -7,24 +6,9 @@ import './SearchBar.scss';
 const SearchBar = ({ keyword, suggests, setKeyword }) => {
   const dispatch = useDispatch();
 
-	const debounceGetSuggests = _.debounce((keyword) => {
-		console.log('debounceGetSuggests');
-		console.log(keyword);
-
-		dispatch(
-			getSuggests({ keyword })
-		);
-	}, 500);
-
-  // const onChangeKeyword = e => {
-  //   setKeyword(e.target.value);
-  //   debounceGetSuggests(e.target.value);
-  // };
-
-	const onChangeKeyword = _.debounce((e) => {
-		console.log(e.target.value);
-		setKeyword(e.target.value)
-	}, 500);
+  const onChangeKeyword = e => {
+    setKeyword(e.target.value);
+  };
 
   const onSubmitKeyword = (e) => {
     e.preventDefault();
