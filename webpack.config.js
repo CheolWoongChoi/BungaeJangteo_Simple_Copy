@@ -11,20 +11,18 @@ module.exports = function(env, argv) {
 	return {
 		mode: devMode ? 'development' : 'production',
 		resolve: {
-			extensions: ['.js', '.jsx'],
+			extensions: ['.js', '.jsx', '.ts', '.tsx'],
 			alias: {
 				src: path.resolve(__dirname, 'src'),
-				public: path.resolve(__dirname, 'public'),
-				images: path.resolve(__dirname, 'public/images'),
+				store: path.resolve(__dirname, 'src/store'),
 				constants: path.resolve(__dirname, 'src/constants'),
 				components: path.resolve(__dirname, 'src/components'),
-				actionTypes: path.resolve(__dirname, 'src/store/actionTypes'),
-				actions: path.resolve(__dirname, 'src/store/actions'),
-				reducers: path.resolve(__dirname, 'src/store/reducers'),
+				public: path.resolve(__dirname, 'public'),
+				images: path.resolve(__dirname, 'public/images'),
 			}
 		},
 		entry: {
-			app: './index.jsx'
+			app: './index'
 		},
 		output: {
 			filename: '[name].js',
@@ -38,14 +36,10 @@ module.exports = function(env, argv) {
 		module: {
 			rules: [
 				{
-					test: /\.jsx?$/,
-					exclude: /(node_modules|bower_components)/,
+					test: /\.tsx?$/,
 					use: [{
-						loader: 'babel-loader',
-						options: {
-							presets: ['@babel/preset-env', '@babel/preset-react'],
-							plugins: ['@babel/plugin-proposal-class-properties', '@babel/plugin-transform-runtime'],
-						}
+						loader: 'ts-loader',
+						options: {}
 					}]
 				},
 				{
@@ -54,7 +48,23 @@ module.exports = function(env, argv) {
 						devMode ? 'style-loader' : MiniCssExtractPlugin.loader, 
 						{
 							loader: 'css-loader',
-							options: { url: false, sourceMap: true } 
+							options: { 
+								importLoaders: 1,
+								modules: {
+									localIdentName: '[hash:base64:5]'
+								},
+								url: false,
+							} 
+						},
+						{
+							loader: 'postcss-loader',
+							options: {
+								postcssOptions: {
+									plugins: [
+										['autoprefixer', {}]
+									]
+								}
+							}
 						},
 						'sass-loader'
 					]
