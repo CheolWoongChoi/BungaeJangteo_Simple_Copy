@@ -21,8 +21,12 @@ npm run build : 배포 파일을 생성합니다.
 <br />
 
 ## 개발 스택
+- TypeScript
 - React (Hooks)
 - Redux
-- Sass
+- Redux-Thunk
+- Sass (Scss)
+- CSS-Module
+- PostCSS (autoprefixer)
 
 <br />
